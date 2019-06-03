@@ -1,19 +1,34 @@
 ﻿Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
 
+
 Public Class frmMain
     Private _rutaArchivoDB As String
+
+#Region "Main"
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         _rutaArchivoDB = Application.StartupPath & "\" & My.Settings.nombreDBRespaldo
         LimpiarControles()
+        InitLeagues()
+
     End Sub
 
     Private Sub LimpiarControles()
+        'Filters
         txtData.Text = ""
         lblStatus.Text = ""
         lblNumRegs.Text = ""
+
+        'Fixtures
+        txtLeagueID.Text = ""
+        txtFixtures.Text = ""
     End Sub
+#End Region
+
+
+#Region "Get Filter"
+
 
     Private Sub btnGet_Click(sender As Object, e As EventArgs) Handles btnGet.Click
         GetData()
@@ -29,7 +44,7 @@ Public Class frmMain
                 System.IO.File.Delete(_rutaArchivoDB)
             End If
 
-            Dim comando As String = String.Format("{0}\node_modules\.bin\firestore-export", My.Settings.rutaNPM)
+            Dim comando As String = String.Format("{0}firestore-export", My.Settings.rutaNPM)
 
             Dim args As String = String.Format("-a {0} -b {1} -n games",
                                        My.Settings.rutaDBCredentials,
@@ -150,7 +165,49 @@ Public Class frmMain
 
     End Sub
 
+#End Region
+
+#Region "Fixtures"
 
 
+    Private Sub cboLeagues_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboLeagues.SelectedIndexChanged
+        If cboLeagues.SelectedIndex > -1 Then
+            txtLeagueID.Text = TryCast(cboLeagues.SelectedItem, League).id
+        End If
+    End Sub
+
+    Private Sub btnSaveFixtures_Click(sender As Object, e As EventArgs) Handles btnSaveFixtures.Click
+        If cboLeagues.SelectedIndex > -1 Then GetFixtures()
+    End Sub
+
+    Private Sub GetFixtures()
+        Dim url As String = String.Format("https://www.api-football.com/demo/api/v2/fixtures/league/{0}", txtLeagueID.Text)
+        Dim header As String = Nothing
+        Dim response As String
+
+        lblStatus.Text = "fetching ... "
+        lblStatus.Refresh()
+        lblNumRegs.Text = ""
+        txtFixtures.Text = ""
+
+        response = GetAPIData(url, header)
+        If String.IsNullOrEmpty(response) Then
+            lblStatus.Text = "Datos no obtenidos"
+        Else
+            lblStatus.Text = "Datos obtenidos de API..."
+            txtFixtures.Text = response
+
+            Dim oFixtures As New FixtureApi
+            oFixtures = JsonConvert.DeserializeObject(Of FixtureApi)(response)
+
+            lblNumRegs.Text = oFixtures.api.results
+
+            fnSaveFixtures(cboLeagues.Text, oFixtures.api.fixtures)
+        End If
+
+        lblStatus.Text = IIf(String.IsNullOrEmpty(txtFixtures.Text), "Datos NO obtenidos", "Datos obtenidos con exito")
+
+    End Sub
+#End Region
 
 End Class
