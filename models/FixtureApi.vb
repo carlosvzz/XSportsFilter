@@ -30,6 +30,7 @@ Public Class FixtureTeam
     End Property
 
     Private Function fnGetTeamAbbreviation(tName As String) As String
+        tName = tName & Space(3)  'x si es menor a 3 caracteres
         Dim tAbbr As String = tName.Substring(0, 3).ToUpper
 
         Select Case tName

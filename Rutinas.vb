@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports Google.Apis
+Imports Newtonsoft.Json
 
 Module Rutinas
     Dim oLeagues As New List(Of League)
@@ -24,6 +26,7 @@ Module Rutinas
         Dim responseString As String = Nothing
 
         Try
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12
             Dim webRequest As WebRequest = WebRequest.Create(myURL)
 
             'Header (si aplica)
@@ -31,6 +34,8 @@ Module Rutinas
                 Dim webHeaderCollection As WebHeaderCollection = webRequest.Headers
                 webHeaderCollection.Add(myHeader)
             End If
+
+
 
             Dim webResponse As HttpWebResponse = CType(webRequest.GetResponse(), HttpWebResponse)
             responseStream = webResponse.GetResponseStream()
@@ -50,10 +55,23 @@ Module Rutinas
 
     Public Sub fnSaveFixtures(idSport As String, listaFix As List(Of Fixture))
         If listaFix IsNot Nothing AndAlso listaFix.Count > 0 Then
-            Dim oGameEntry As New Gameentry(idSport, listaFix(0))
+            Dim textoJson As String = ""
+            Dim textoAux As String
 
-            MsgBox(oGameEntry.idSport)
+            For i As Integer = 0 To 4
+                Dim oGameEntry As New Gameentry(idSport, listaFix(i))
 
+                'Cada objeto sera "idSport_fixtureid" : {<json seriealizado>},
+                'idSport_fixtureid = Key en firestore
+                textoAux = String.Format("""{0}_{1}"":", idSport, oGameEntry.iD)
+                textoAux &= JsonConvert.SerializeObject(oGameEntry)
+                textoAux &= IIf(i < 4, ",", "")
+
+                textoJson &= textoAux
+            Next
+
+            textoJson = "{""fixtures"":{" & textoJson & "}}"
+            frmMain.txtFixtures.Text = textoJson
         End If
     End Sub
 

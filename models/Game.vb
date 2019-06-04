@@ -2,7 +2,7 @@
     Public Property Id As String
     Public Property IdSport As String
     Public Property IdGame As Integer
-    Public Property DateGame As customDate
+    Public Property DateGame As DBTimeStamp
     Public Property Time As String
     Public Property CountDraw As Integer
     Public Property CountAway As Integer
@@ -25,16 +25,7 @@
         End Get
     End Property
 
-    Public Class Value
-        Public Property _seconds As Integer
-        Public Property _nanoseconds As Integer
-    End Class
 
-
-    Public Class customDate
-        Public Property __datatype__ As String
-        Public Property Value As Value
-    End Class
 
     Public Class Team
             Public Property City As String
