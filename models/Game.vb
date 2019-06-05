@@ -16,12 +16,8 @@
 
     Public ReadOnly Property DateReal() As DateTime
         Get
-            Dim nTimestamp As Double = DateGame.Value._seconds
-            Dim nDateTime As System.DateTime = New System.DateTime(1970, 1, 1, 0, 0, 0, 0)
-            nDateTime = nDateTime.AddSeconds(nTimestamp)
-
+            Dim nDateTime As DateTime = fnGetDateFromTimestamp(DateGame.value._seconds)
             Return nDateTime.Date
-
         End Get
     End Property
 

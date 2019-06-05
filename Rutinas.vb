@@ -1,22 +1,41 @@
 ﻿Imports System.IO
 Imports System.Net
-Imports Google.Apis
 Imports Newtonsoft.Json
 
 Module Rutinas
     Dim oLeagues As New List(Of League)
 
+    Public Sub PonEstatus(Msj As String)
+        frmMain.lblStatus.Text = Msj
+    End Sub
+
+
     Public Sub InitLeagues()
-        'api Football
-        oLeagues.Add(New League("Soccer USA", "US", 294))
-        oLeagues.Add(New League("Soccer America", "World", 311))
-        oLeagues.Add(New League("Soccer NL", "NL", 10))
+        'Leer de archivo texto
+        Try
+            Dim archivo As String = "Ligas.txt"
+            If Not File.Exists(archivo) Then
+                PonEstatus("No se encontro el archivo " & archivo)
+            Else
+                Using sr As StreamReader = New StreamReader(archivo)
+                    While sr.Peek() >= 0
+                        Dim linea As String = sr.ReadLine
+                        'Texto viene como <Clave>|<Nombre>|<id>
+                        Dim oLiga As New League(linea.Split("|")(0), linea.Split("|")(1), linea.Split("|")(2))
+                        oLeagues.Add(oLiga)
+                    End While
+                End Using
+            End If
 
+            frmMain.cboLeagues.DataSource = oLeagues.OrderBy(Function(x) x.nombre).ToList
+            frmMain.cboLeagues.DisplayMember = "Nombre"
+            frmMain.cboLeagues.SelectedIndex = -1
+            frmMain.txtLeagueID.Text = ""
 
-        frmMain.cboLeagues.DataSource = oLeagues.OrderBy(Function(x) x.nombre).ToList
-        frmMain.cboLeagues.DisplayMember = "Nombre"
-        frmMain.cboLeagues.SelectedIndex = -1
-        frmMain.txtLeagueID.Text = ""
+        Catch ex As Exception
+            PonEstatus("SNE InitLeagues > " & ex.Message)
+        End Try
+
     End Sub
 
 
@@ -75,4 +94,12 @@ Module Rutinas
         End If
     End Sub
 
+
+    Public Function fnGetDateFromTimestamp(seconds As Integer) As DateTime
+        Dim nTimestamp As Double = seconds
+        Dim nDateTime As System.DateTime = New System.DateTime(1970, 1, 1, 0, 0, 0, 0)
+        nDateTime = nDateTime.AddSeconds(nTimestamp).ToLocalTime
+
+        Return nDateTime
+    End Function
 End Module

@@ -1,20 +1,11 @@
 ﻿Public Class Gameentry
     Public Property iD As Integer
     Public Property idSport As String
-    Public Property gameTimestamp As DBTimeStampSeconds
+    Public Property gameTimestamp As Integer
+    Public Property gameDate As Integer         'En formato AAAAMMDD
     Public Property awayTeam As GameentryTeam
     Public Property homeTeam As GameentryTeam
     Public Property location As String
-
-    'Public Sub New(mIdSport As String, myID As Integer, mgGameTimestamp As Integer, mAwayTeam As GameentryTeam, mhomeTeam As GameentryTeam, mLocation As String)
-    '    Me.idSport = mIdSport
-
-    '    Me.iD = myID
-    '    Me.gameTimestamp = mgGameTimestamp
-    '    Me.awayTeam = mAwayTeam
-    '    Me.homeTeam = mhomeTeam
-    '    Me.location = mLocation
-    'End Sub
 
     Public Sub New(mIdSport As String, oGame As Fixture)
         Me.idSport = mIdSport
@@ -25,7 +16,8 @@
         Me.location = oGame.venue
 
         'TimeStamp preparado para firestore
-        Me.gameTimestamp = New DBTimeStampSeconds(oGame.event_timestamp)
+        Me.gameTimestamp = oGame.event_timestamp
+        Me.gameDate = Val(Format(fnGetDateFromTimestamp(oGame.event_timestamp).Date, "yyyyMMdd"))
     End Sub
 
 End Class
