@@ -1,5 +1,5 @@
 ﻿Public Class Gameentry
-    Public Property iD As Integer
+    Public Property idGame As Integer
     Public Property idSport As String
     Public Property gameTimestamp As Integer
     Public Property gameDate As Integer         'En formato AAAAMMDD
@@ -10,7 +10,7 @@
     Public Sub New(mIdSport As String, oGame As Fixture)
         Me.idSport = mIdSport
 
-        Me.iD = oGame.fixture_id
+        Me.idGame = oGame.fixture_id
         Me.awayTeam = New GameentryTeam(oGame.awayTeam)
         Me.homeTeam = New GameentryTeam(oGame.homeTeam)
         Me.location = oGame.venue

@@ -31,11 +31,12 @@ Partial Class frmMain
         Me.btnDoAll = New System.Windows.Forms.Button()
         Me.btnGet = New System.Windows.Forms.Button()
         Me.tabFixtures = New System.Windows.Forms.TabPage()
+        Me.txtFixtures = New System.Windows.Forms.TextBox()
         Me.txtLeagueID = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cboLeagues = New System.Windows.Forms.ComboBox()
         Me.btnSaveFixtures = New System.Windows.Forms.Button()
-        Me.txtFixtures = New System.Windows.Forms.TextBox()
+        Me.chkFixturesSave = New System.Windows.Forms.CheckBox()
         Me.tabMain.SuspendLayout()
         Me.tabFilters.SuspendLayout()
         Me.tabFixtures.SuspendLayout()
@@ -50,7 +51,7 @@ Partial Class frmMain
         Me.lblStatus.ForeColor = System.Drawing.Color.White
         Me.lblStatus.Location = New System.Drawing.Point(0, 167)
         Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(322, 19)
+        Me.lblStatus.Size = New System.Drawing.Size(340, 19)
         Me.lblStatus.TabIndex = 1
         Me.lblStatus.Text = "Estatus"
         '
@@ -61,7 +62,7 @@ Partial Class frmMain
         Me.lblNumRegs.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblNumRegs.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblNumRegs.ForeColor = System.Drawing.Color.White
-        Me.lblNumRegs.Location = New System.Drawing.Point(320, 167)
+        Me.lblNumRegs.Location = New System.Drawing.Point(338, 167)
         Me.lblNumRegs.Name = "lblNumRegs"
         Me.lblNumRegs.Size = New System.Drawing.Size(73, 19)
         Me.lblNumRegs.TabIndex = 5
@@ -75,7 +76,7 @@ Partial Class frmMain
         Me.tabMain.Location = New System.Drawing.Point(-1, 1)
         Me.tabMain.Name = "tabMain"
         Me.tabMain.SelectedIndex = 0
-        Me.tabMain.Size = New System.Drawing.Size(393, 161)
+        Me.tabMain.Size = New System.Drawing.Size(412, 161)
         Me.tabMain.TabIndex = 6
         '
         'tabFilters
@@ -85,10 +86,10 @@ Partial Class frmMain
         Me.tabFilters.Controls.Add(Me.btnDoFilter)
         Me.tabFilters.Controls.Add(Me.btnDoAll)
         Me.tabFilters.Controls.Add(Me.btnGet)
-        Me.tabFilters.Location = New System.Drawing.Point(4, 27)
+        Me.tabFilters.Location = New System.Drawing.Point(4, 23)
         Me.tabFilters.Name = "tabFilters"
         Me.tabFilters.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabFilters.Size = New System.Drawing.Size(385, 130)
+        Me.tabFilters.Size = New System.Drawing.Size(404, 134)
         Me.tabFilters.TabIndex = 0
         Me.tabFilters.Text = "Filters"
         '
@@ -104,7 +105,7 @@ Partial Class frmMain
         Me.txtData.Name = "txtData"
         Me.txtData.ReadOnly = True
         Me.txtData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtData.Size = New System.Drawing.Size(304, 123)
+        Me.txtData.Size = New System.Drawing.Size(323, 123)
         Me.txtData.TabIndex = 8
         Me.txtData.Text = "hola"
         '
@@ -150,23 +151,39 @@ Partial Class frmMain
         'tabFixtures
         '
         Me.tabFixtures.BackColor = System.Drawing.Color.FromArgb(CType(CType(186, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(152, Byte), Integer))
+        Me.tabFixtures.Controls.Add(Me.chkFixturesSave)
         Me.tabFixtures.Controls.Add(Me.txtFixtures)
         Me.tabFixtures.Controls.Add(Me.txtLeagueID)
         Me.tabFixtures.Controls.Add(Me.Label1)
         Me.tabFixtures.Controls.Add(Me.cboLeagues)
         Me.tabFixtures.Controls.Add(Me.btnSaveFixtures)
-        Me.tabFixtures.Location = New System.Drawing.Point(4, 27)
+        Me.tabFixtures.Location = New System.Drawing.Point(4, 23)
         Me.tabFixtures.Name = "tabFixtures"
         Me.tabFixtures.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabFixtures.Size = New System.Drawing.Size(385, 130)
+        Me.tabFixtures.Size = New System.Drawing.Size(404, 134)
         Me.tabFixtures.TabIndex = 1
         Me.tabFixtures.Text = "Fixtures"
+        '
+        'txtFixtures
+        '
+        Me.txtFixtures.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtFixtures.BackColor = System.Drawing.Color.FromArgb(CType(CType(131, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(136, Byte), Integer))
+        Me.txtFixtures.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.txtFixtures.ForeColor = System.Drawing.Color.White
+        Me.txtFixtures.Location = New System.Drawing.Point(151, 3)
+        Me.txtFixtures.Multiline = True
+        Me.txtFixtures.Name = "txtFixtures"
+        Me.txtFixtures.ReadOnly = True
+        Me.txtFixtures.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtFixtures.Size = New System.Drawing.Size(247, 123)
+        Me.txtFixtures.TabIndex = 12
         '
         'txtLeagueID
         '
         Me.txtLeagueID.Location = New System.Drawing.Point(85, 28)
         Me.txtLeagueID.Name = "txtLeagueID"
-        Me.txtLeagueID.Size = New System.Drawing.Size(63, 25)
+        Me.txtLeagueID.Size = New System.Drawing.Size(63, 22)
         Me.txtLeagueID.TabIndex = 11
         Me.txtLeagueID.Text = "999"
         Me.txtLeagueID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -176,7 +193,7 @@ Partial Class frmMain
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(9, 36)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(80, 18)
+        Me.Label1.Size = New System.Drawing.Size(70, 14)
         Me.Label1.TabIndex = 10
         Me.Label1.Text = "League Id"
         '
@@ -189,7 +206,7 @@ Partial Class frmMain
         Me.cboLeagues.FormattingEnabled = True
         Me.cboLeagues.Location = New System.Drawing.Point(9, 6)
         Me.cboLeagues.Name = "cboLeagues"
-        Me.cboLeagues.Size = New System.Drawing.Size(139, 26)
+        Me.cboLeagues.Size = New System.Drawing.Size(139, 22)
         Me.cboLeagues.TabIndex = 9
         '
         'btnSaveFixtures
@@ -198,34 +215,31 @@ Partial Class frmMain
         Me.btnSaveFixtures.FlatAppearance.BorderSize = 0
         Me.btnSaveFixtures.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnSaveFixtures.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.btnSaveFixtures.Location = New System.Drawing.Point(6, 82)
+        Me.btnSaveFixtures.Location = New System.Drawing.Point(9, 82)
         Me.btnSaveFixtures.Name = "btnSaveFixtures"
-        Me.btnSaveFixtures.Size = New System.Drawing.Size(83, 46)
+        Me.btnSaveFixtures.Size = New System.Drawing.Size(85, 46)
         Me.btnSaveFixtures.TabIndex = 8
-        Me.btnSaveFixtures.Text = "Save Fixtures"
+        Me.btnSaveFixtures.Text = "Get / Save Fixtures"
         Me.btnSaveFixtures.UseVisualStyleBackColor = False
         '
-        'txtFixtures
+        'chkFixturesSave
         '
-        Me.txtFixtures.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtFixtures.BackColor = System.Drawing.Color.FromArgb(CType(CType(131, Byte), Integer), CType(CType(151, Byte), Integer), CType(CType(136, Byte), Integer))
-        Me.txtFixtures.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.txtFixtures.ForeColor = System.Drawing.Color.White
-        Me.txtFixtures.Location = New System.Drawing.Point(154, 3)
-        Me.txtFixtures.Multiline = True
-        Me.txtFixtures.Name = "txtFixtures"
-        Me.txtFixtures.ReadOnly = True
-        Me.txtFixtures.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtFixtures.Size = New System.Drawing.Size(231, 123)
-        Me.txtFixtures.TabIndex = 12
+        Me.chkFixturesSave.AutoSize = True
+        Me.chkFixturesSave.Checked = True
+        Me.chkFixturesSave.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkFixturesSave.Location = New System.Drawing.Point(9, 58)
+        Me.chkFixturesSave.Name = "chkFixturesSave"
+        Me.chkFixturesSave.Size = New System.Drawing.Size(117, 18)
+        Me.chkFixturesSave.TabIndex = 13
+        Me.chkFixturesSave.Text = "Guardar datos"
+        Me.chkFixturesSave.UseVisualStyleBackColor = True
         '
         'frmMain
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 18.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(186, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(152, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(395, 188)
+        Me.ClientSize = New System.Drawing.Size(413, 188)
         Me.Controls.Add(Me.tabMain)
         Me.Controls.Add(Me.lblNumRegs)
         Me.Controls.Add(Me.lblStatus)
@@ -257,4 +271,5 @@ Partial Class frmMain
     Friend WithEvents cboLeagues As ComboBox
     Friend WithEvents btnSaveFixtures As Button
     Friend WithEvents txtFixtures As TextBox
+    Friend WithEvents chkFixturesSave As CheckBox
 End Class

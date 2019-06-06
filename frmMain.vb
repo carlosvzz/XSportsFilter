@@ -181,16 +181,24 @@ Public Class frmMain
     End Sub
 
     Private Sub GetFixtures()
-        Dim url As String = String.Format("https://www.api-football.com/demo/api/v2/fixtures/league/{0}", txtLeagueID.Text)
-        Dim header As String = Nothing
+        Dim url As String = ""
         Dim response As String
+        Dim dicHeader As New Dictionary(Of String, String)
+
+        If cboLeagues.Text = "League NL" Then 'Demo
+            url = Secrets.cRapidAPIUrlDemo & txtLeagueID.Text
+        Else
+            url = Secrets.cRapidAPIUrl & txtLeagueID.Text
+            dicHeader.Add("X-RapidAPI-Host", Secrets.cRapidAPIHost)
+            dicHeader.Add("X-RapidAPI-Key", Secrets.cRapidAPIKey)
+        End If
 
         lblStatus.Text = "fetching ... "
         lblStatus.Refresh()
         lblNumRegs.Text = ""
         txtFixtures.Text = ""
 
-        response = GetAPIData(url, header)
+        response = GetAPIData(url, dicHeader)
         If String.IsNullOrEmpty(response) Then
             lblStatus.Text = "Datos no obtenidos"
         Else
@@ -202,10 +210,12 @@ Public Class frmMain
 
             lblNumRegs.Text = oFixtures.api.results
 
-            fnSaveFixtures(cboLeagues.Text, oFixtures.api.fixtures)
+            If chkFixturesSave.Checked Then
+                fnSaveFixtures(cboLeagues.Text, oFixtures.api.fixtures)
+            End If
         End If
 
-        lblStatus.Text = IIf(String.IsNullOrEmpty(txtFixtures.Text), "Datos NO obtenidos", "Datos obtenidos con exito")
+            lblStatus.Text = IIf(String.IsNullOrEmpty(txtFixtures.Text), "Datos NO obtenidos", "Datos obtenidos con exito")
 
     End Sub
 #End Region

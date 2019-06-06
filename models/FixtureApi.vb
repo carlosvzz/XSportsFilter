@@ -15,7 +15,6 @@ Public Class Fixture
     Public Property venue As String
     Public Property homeTeam As FixtureTeam
     Public Property awayTeam As FixtureTeam
-    Public Property goalsHomeTeam As Integer
 End Class
 
 

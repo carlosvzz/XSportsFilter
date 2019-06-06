@@ -39,7 +39,7 @@ Module Rutinas
     End Sub
 
 
-    Public Function GetAPIData(myURL As String, myHeader As String) As String
+    Public Function GetAPIData(myURL As String, myHeader As Dictionary(Of String, String)) As String
         Dim responseStream As System.IO.Stream
         Dim stringStreamReader As System.IO.StreamReader
         Dim responseString As String = Nothing
@@ -49,9 +49,11 @@ Module Rutinas
             Dim webRequest As WebRequest = WebRequest.Create(myURL)
 
             'Header (si aplica)
-            If Not String.IsNullOrEmpty(myHeader) Then
+            If myHeader IsNot Nothing AndAlso myHeader.Count > 0 Then
                 Dim webHeaderCollection As WebHeaderCollection = webRequest.Headers
-                webHeaderCollection.Add(myHeader)
+                For Each item In myHeader
+                    webHeaderCollection.Add(item.Key, item.Value)
+                Next
             End If
 
 
@@ -77,20 +79,34 @@ Module Rutinas
             Dim textoJson As String = ""
             Dim textoAux As String
 
-            For i As Integer = 0 To 4
+            For i As Integer = 0 To listaFix.Count - 1
                 Dim oGameEntry As New Gameentry(idSport, listaFix(i))
 
                 'Cada objeto sera "idSport_fixtureid" : {<json seriealizado>},
                 'idSport_fixtureid = Key en firestore
-                textoAux = String.Format("""{0}_{1}"":", idSport, oGameEntry.iD)
+                textoAux = String.Format("""{0}_{1}"":", idSport, oGameEntry.idGame)
                 textoAux &= JsonConvert.SerializeObject(oGameEntry)
-                textoAux &= IIf(i < 4, ",", "")
+                textoAux &= IIf(i < listaFix.Count - 1, ",", "")
 
                 textoJson &= textoAux
             Next
 
+            'Desplegar en forma principal
             textoJson = "{""fixtures"":{" & textoJson & "}}"
             frmMain.txtFixtures.Text = textoJson
+
+            'Guardar archivo json
+            Try
+                Dim archivo = My.Settings.rutaImportJson & "/fixtures.json"
+                If File.Exists(archivo) Then File.Delete(archivo)
+                File.AppendAllText(archivo, textoJson)
+
+            Catch ex As Exception
+                PonEstatus("SNE fnSaveFixtures > " & ex.Message)
+            End Try
+
+
+
         End If
     End Sub
 
