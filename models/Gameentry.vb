@@ -23,20 +23,20 @@
 End Class
 
 Public Class GameentryTeam
-    Public Property iD As Integer
-    Public Property name As String
-    Public Property abbreviation As String
+    Public Property ID As String
+    Public Property Name As String
+    Public Property Abbreviation As String
 
     Public Sub New(myID As Integer, mName As String, mAbbreviation As String)
-        Me.iD = myID
-        Me.name = mName
-        Me.abbreviation = mAbbreviation
+        Me.ID = myID
+        Me.Name = mName
+        Me.Abbreviation = mAbbreviation
     End Sub
 
     Public Sub New(oTeam As FixtureTeam)
-        Me.iD = oTeam.team_id
-        Me.name = oTeam.team_name
-        Me.abbreviation = oTeam.team_abbreviation
+        Me.ID = oTeam.team_id.ToString
+        Me.Name = oTeam.team_name
+        Me.Abbreviation = oTeam.team_abbreviation
     End Sub
 End Class
 
