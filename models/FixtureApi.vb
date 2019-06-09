@@ -32,7 +32,7 @@ Public Class FixtureTeam
         tName = tName & Space(3)  'x si es menor a 3 caracteres
         Dim tAbbr As String = tName.Substring(0, 3).ToUpper
 
-        Select Case tName
+        Select Case tName.Trim
             'USA - MLS
             Case "New York City FC" : tAbbr = "NYC"
             Case "FC Dallas" : tAbbr = "DAL"
