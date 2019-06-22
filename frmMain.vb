@@ -106,21 +106,60 @@ Public Class frmMain
                 Dim texto As String = ""
                 Dim datoJuego As String
                 Dim contador As Integer = 0
+                Dim esSoccer As Boolean
+                Dim etiquetaJuego As String
+                Dim hayDifWin As Boolean
+                Dim ganadorSoccer As Integer
 
                 For Each oGame As Game In listaGames
                     If oGame.DateReal = Now.Date Then
+                        esSoccer = oGame.IdSport.ToLower.Contains("soccer")
+
+                        etiquetaJuego = oGame.IdSport
+                        If esSoccer Then etiquetaJuego = etiquetaJuego.Replace("Soccer", "FB")
 
                         Dim teamAway As String = Microsoft.VisualBasic.Left(oGame.AwayTeam.Abbreviation & Space(3), 3)
                         Dim teamHome As String = Microsoft.VisualBasic.Left(oGame.HomeTeam.Abbreviation & Space(3), 3)
 
-                        datoJuego = String.Format("{0} ({1})> {2} @ {3} | ",
-                                              oGame.IdSport,
+                        datoJuego = String.Format("{0} ({1})> {2} {3} {4} | ",
+                                              etiquetaJuego,
                                               oGame.Time,
-                                              teamAway,
-                                              teamHome)
+                                              IIf(esSoccer, teamHome, teamAway),
+                                              IIf(esSoccer, "v", "@"),
+                                              IIf(esSoccer, teamAway, teamHome))
 
-                        'MAIN
-                        If Not conFiltro Or (conFiltro And Math.Abs(oGame.CountAway - oGame.CountHome) > 2) Then
+                        'MAIN ///////////////////////////////////////////////////////////////////////////
+                        If esSoccer Then
+                            ganadorSoccer = -1
+                            hayDifWin = False
+
+                            '-- DIFERENCIA CON MAS DE +2 votos
+                            'Gana Visitante 
+                            If oGame.CountAway - oGame.CountHome > 2 AndAlso oGame.CountAway - oGame.CountDraw > 2 Then
+                                ganadorSoccer = 2
+                                hayDifWin = True
+                            End If
+                            'Gana Local
+                            If Not hayDifWin Then
+                                If oGame.CountHome - oGame.CountAway > 2 AndAlso oGame.CountHome - oGame.CountDraw > 2 Then
+                                    ganadorSoccer = 1
+                                    hayDifWin = True
+                                End If
+                            End If
+                            'Empate
+                            If Not hayDifWin Then
+                                If oGame.CountDraw - oGame.CountAway > 2 AndAlso oGame.CountDraw - oGame.CountHome > 2 Then
+                                    ganadorSoccer = 0
+                                    hayDifWin = True
+                                End If
+                            End If
+
+                        Else
+                            'US Sports > Gana cualquier con +2 diferencia (visitante o local)
+                            hayDifWin = Math.Abs(oGame.CountAway - oGame.CountHome) > 2
+                        End If
+
+                        If Not conFiltro Or (conFiltro And hayDifWin) Then
                             Dim etiqueta As String
                             If (oGame.IdSport.ToLower = "nba" Or oGame.IdSport.ToLower = "nfl") Then
                                 etiqueta = "sp+/- "
@@ -128,25 +167,53 @@ Public Class frmMain
                                 etiqueta = "ml "
                             End If
 
-                            If oGame.CountAway > oGame.CountHome Then
+                            If esSoccer Then
                                 contador += 1
-                                texto &= datoJuego & etiqueta & teamAway & " (" & oGame.CountAway & "." & oGame.CountHome & ") | " & vbCrLf
+                                texto &= datoJuego & etiqueta
+                                Select Case ganadorSoccer
+                                    Case 0 : texto &= "X"
+                                    Case 1 : texto &= teamHome
+                                    Case 2 : texto &= teamAway
+                                End Select
+                                texto &= " (" & oGame.CountHome & "." & oGame.CountDraw & "." & oGame.CountAway & ") | " & vbCrLf
+
                             Else
-                                contador += 1
-                                texto &= datoJuego & etiqueta & teamHome & " (" & oGame.CountHome & "." & oGame.CountAway & ") | " & vbCrLf
+                                If oGame.CountAway > oGame.CountHome Then
+                                    contador += 1
+                                    texto &= datoJuego & etiqueta & teamAway & " (" & oGame.CountAway & "." & oGame.CountHome & ") | " & vbCrLf
+                                Else
+                                    contador += 1
+                                    texto &= datoJuego & etiqueta & teamHome & " (" & oGame.CountHome & "." & oGame.CountAway & ") | " & vbCrLf
+                                End If
                             End If
                         End If
 
-                        'OVER / UNDER
+                        'OVER / UNDER ///////////////////////////////////////////////////////////////////////////
                         If Not conFiltro Or (conFiltro And Math.Abs(oGame.CountOverUnder) > 2) Then
                             contador += 1
                             texto &= datoJuego & IIf(oGame.CountOverUnder > 0, "over ", "under ") & "(" & oGame.CountOverUnder & ") | " & vbCrLf
                         End If
 
-                        'EXTRA
+                        'EXTRA ///////////////////////////////////////////////////////////////////////////
                         If Not conFiltro Or (conFiltro And Math.Abs(oGame.CountExtra) > 2) Then
+                            Dim etiqueta As String = ""
                             contador += 1
-                            texto &= datoJuego & "ML " & IIf(oGame.CountExtra > 0, teamAway, teamHome) & " (" & oGame.CountExtra & ") |  " & vbCrLf
+
+                            If esSoccer Then
+                                etiqueta = "btts"
+                                texto &= datoJuego & etiqueta & " " & IIf(oGame.CountExtra > 0, "Y", "N") & " (" & oGame.CountExtra & ") |  " & vbCrLf
+
+                            Else 'US Sports
+                                If (oGame.IdSport.ToLower = "nba" Or oGame.IdSport.ToLower = "nfl") Then
+                                    etiqueta = "ml "
+                                ElseIf oGame.IdSport.ToLower = "mlb" Then
+                                    etiqueta = "f5-ml "
+                                End If
+                                texto &= datoJuego & etiqueta & " " & IIf(oGame.CountExtra > 0, teamAway, teamHome) & " (" & oGame.CountExtra & ") |  " & vbCrLf
+                            End If
+
+
+
                         End If
                     End If
 

@@ -31,12 +31,12 @@ Partial Class frmMain
         Me.btnDoAll = New System.Windows.Forms.Button()
         Me.btnGet = New System.Windows.Forms.Button()
         Me.tabFixtures = New System.Windows.Forms.TabPage()
+        Me.chkFixturesSave = New System.Windows.Forms.CheckBox()
         Me.txtFixtures = New System.Windows.Forms.TextBox()
         Me.txtLeagueID = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cboLeagues = New System.Windows.Forms.ComboBox()
         Me.btnSaveFixtures = New System.Windows.Forms.Button()
-        Me.chkFixturesSave = New System.Windows.Forms.CheckBox()
         Me.tabMain.SuspendLayout()
         Me.tabFilters.SuspendLayout()
         Me.tabFixtures.SuspendLayout()
@@ -51,7 +51,7 @@ Partial Class frmMain
         Me.lblStatus.ForeColor = System.Drawing.Color.White
         Me.lblStatus.Location = New System.Drawing.Point(0, 167)
         Me.lblStatus.Name = "lblStatus"
-        Me.lblStatus.Size = New System.Drawing.Size(340, 19)
+        Me.lblStatus.Size = New System.Drawing.Size(471, 19)
         Me.lblStatus.TabIndex = 1
         Me.lblStatus.Text = "Estatus"
         '
@@ -62,7 +62,7 @@ Partial Class frmMain
         Me.lblNumRegs.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lblNumRegs.Font = New System.Drawing.Font("Consolas", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblNumRegs.ForeColor = System.Drawing.Color.White
-        Me.lblNumRegs.Location = New System.Drawing.Point(338, 167)
+        Me.lblNumRegs.Location = New System.Drawing.Point(469, 167)
         Me.lblNumRegs.Name = "lblNumRegs"
         Me.lblNumRegs.Size = New System.Drawing.Size(73, 19)
         Me.lblNumRegs.TabIndex = 5
@@ -76,7 +76,7 @@ Partial Class frmMain
         Me.tabMain.Location = New System.Drawing.Point(-1, 1)
         Me.tabMain.Name = "tabMain"
         Me.tabMain.SelectedIndex = 0
-        Me.tabMain.Size = New System.Drawing.Size(412, 161)
+        Me.tabMain.Size = New System.Drawing.Size(543, 161)
         Me.tabMain.TabIndex = 6
         '
         'tabFilters
@@ -89,7 +89,7 @@ Partial Class frmMain
         Me.tabFilters.Location = New System.Drawing.Point(4, 23)
         Me.tabFilters.Name = "tabFilters"
         Me.tabFilters.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabFilters.Size = New System.Drawing.Size(404, 134)
+        Me.tabFilters.Size = New System.Drawing.Size(535, 134)
         Me.tabFilters.TabIndex = 0
         Me.tabFilters.Text = "Filters"
         '
@@ -105,7 +105,7 @@ Partial Class frmMain
         Me.txtData.Name = "txtData"
         Me.txtData.ReadOnly = True
         Me.txtData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtData.Size = New System.Drawing.Size(323, 123)
+        Me.txtData.Size = New System.Drawing.Size(454, 123)
         Me.txtData.TabIndex = 8
         Me.txtData.Text = "hola"
         '
@@ -163,6 +163,18 @@ Partial Class frmMain
         Me.tabFixtures.Size = New System.Drawing.Size(404, 134)
         Me.tabFixtures.TabIndex = 1
         Me.tabFixtures.Text = "Fixtures"
+        '
+        'chkFixturesSave
+        '
+        Me.chkFixturesSave.AutoSize = True
+        Me.chkFixturesSave.Checked = True
+        Me.chkFixturesSave.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkFixturesSave.Location = New System.Drawing.Point(9, 58)
+        Me.chkFixturesSave.Name = "chkFixturesSave"
+        Me.chkFixturesSave.Size = New System.Drawing.Size(117, 18)
+        Me.chkFixturesSave.TabIndex = 13
+        Me.chkFixturesSave.Text = "Guardar datos"
+        Me.chkFixturesSave.UseVisualStyleBackColor = True
         '
         'txtFixtures
         '
@@ -222,24 +234,12 @@ Partial Class frmMain
         Me.btnSaveFixtures.Text = "Get / Save Fixtures"
         Me.btnSaveFixtures.UseVisualStyleBackColor = False
         '
-        'chkFixturesSave
-        '
-        Me.chkFixturesSave.AutoSize = True
-        Me.chkFixturesSave.Checked = True
-        Me.chkFixturesSave.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkFixturesSave.Location = New System.Drawing.Point(9, 58)
-        Me.chkFixturesSave.Name = "chkFixturesSave"
-        Me.chkFixturesSave.Size = New System.Drawing.Size(117, 18)
-        Me.chkFixturesSave.TabIndex = 13
-        Me.chkFixturesSave.Text = "Guardar datos"
-        Me.chkFixturesSave.UseVisualStyleBackColor = True
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 14.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(186, Byte), Integer), CType(CType(168, Byte), Integer), CType(CType(152, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(413, 188)
+        Me.ClientSize = New System.Drawing.Size(544, 188)
         Me.Controls.Add(Me.tabMain)
         Me.Controls.Add(Me.lblNumRegs)
         Me.Controls.Add(Me.lblStatus)
