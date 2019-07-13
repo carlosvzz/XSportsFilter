@@ -2,10 +2,7 @@
     Public Property api As Response
 End Class
 
-Public Class Response
-    Public Property results As Integer
-    Public Property fixtures As List(Of Fixture)
-End Class
+
 
 Public Class Fixture
     Public Property fixture_id As Integer
@@ -46,6 +43,42 @@ Public Class FixtureTeam
             Case "DC United" : tAbbr = "DC"
             Case "Los Angeles FC" : tAbbr = "LAF"
             Case "Sporting Kansas City" : tAbbr = "KC"
+
+            'ENG - PREMIER
+            Case "West Ham" : tAbbr = "HAM"
+            Case "Crystal Palace" : tAbbr = "CPA"
+            Case "Manchester United" : tAbbr = "MUN"
+
+                'ENG2 = CHAMPIONSHIP
+            Case "West Brom" : tAbbr = "WEB"
+                'FRA
+            Case "Montpellier" : tAbbr = "MTP"
+            Case "Paris Saint Germain" : tAbbr = "PSG"
+            Case "Saint Etienne" : tAbbr = "STE"
+
+                'HOL 
+            Case "De Graafschap" : tAbbr = "DEG"
+            Case "FC OSS" : tAbbr = "OSS"
+
+                'HOL2
+            Case "De Graafschap" : tAbbr = "DEG"
+            Case "FC Eindhoven" : tAbbr = "EIN"
+            Case "FC OSS" : tAbbr = "OSS"
+            Case "FC Volendam" : tAbbr = "VOL"
+            Case "Jong Ajax" : tAbbr = "AJA"
+            Case "Jong AZ" : tAbbr = "AZ "
+            Case "Jong PSV" : tAbbr = "PSV"
+            Case "Jong Utrecht" : tAbbr = "UTR"
+
+                'MEX 
+            Case "Atletico San Luis" : tAbbr = "SLP"
+            Case "Club America" : tAbbr = "AME"
+            Case "Club Queretaro" : tAbbr = "QRO"
+            Case "Club Tijuana" : tAbbr = "TIJ"
+            Case "FC Juarez" : tAbbr = "JUA"
+            Case "Monarcas" : tAbbr = "MOR"
+            Case "Monterrey" : tAbbr = "MTY"
+            Case "U.N.A.M. - Pumas" : tAbbr = "PUM"
         End Select
 
         Return tAbbr

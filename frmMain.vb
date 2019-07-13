@@ -133,22 +133,22 @@ Public Class frmMain
                             ganadorSoccer = -1
                             hayDifWin = False
 
-                            '-- DIFERENCIA CON MAS DE +2 votos
+                            '-- DIFERENCIA CON MAS DE +2 votos en la suma del resto
                             'Gana Visitante 
-                            If oGame.CountAway - oGame.CountHome > 2 AndAlso oGame.CountAway - oGame.CountDraw > 2 Then
+                            If oGame.CountAway - (oGame.CountHome + oGame.CountDraw) > 2 Then
                                 ganadorSoccer = 2
                                 hayDifWin = True
                             End If
                             'Gana Local
                             If Not hayDifWin Then
-                                If oGame.CountHome - oGame.CountAway > 2 AndAlso oGame.CountHome - oGame.CountDraw > 2 Then
+                                If oGame.CountHome - (oGame.CountAway + oGame.CountDraw) > 2 Then
                                     ganadorSoccer = 1
                                     hayDifWin = True
                                 End If
                             End If
                             'Empate
                             If Not hayDifWin Then
-                                If oGame.CountDraw - oGame.CountAway > 2 AndAlso oGame.CountDraw - oGame.CountHome > 2 Then
+                                If oGame.CountDraw - (oGame.CountHome + oGame.CountAway) > 2 Then
                                     ganadorSoccer = 0
                                     hayDifWin = True
                                 End If
@@ -245,6 +245,7 @@ Public Class frmMain
 
     Private Sub btnSaveFixtures_Click(sender As Object, e As EventArgs) Handles btnSaveFixtures.Click
         If cboLeagues.SelectedIndex > -1 Then GetFixtures()
+        'If cboLeagues.SelectedIndex > -1 Then GetTeams()
     End Sub
 
     Private Sub GetFixtures()
@@ -282,7 +283,47 @@ Public Class frmMain
             End If
         End If
 
-            lblStatus.Text = IIf(String.IsNullOrEmpty(txtFixtures.Text), "Datos NO obtenidos", "Datos obtenidos con exito")
+        lblStatus.Text = IIf(String.IsNullOrEmpty(txtFixtures.Text), "Datos NO obtenidos", "Datos obtenidos con exito")
+
+    End Sub
+
+    Private Sub GetTeams()
+        Dim url As String = ""
+        Dim response As String
+        Dim dicHeader As New Dictionary(Of String, String)
+
+        If cboLeagues.Text = "League NL" Then 'Demo
+            MsgBox("No valido")
+            Exit Sub
+        Else
+            url = Secrets.cRapidAPIUrlTeams & txtLeagueID.Text
+            dicHeader.Add("X-RapidAPI-Host", Secrets.cRapidAPIHost)
+            dicHeader.Add("X-RapidAPI-Key", Secrets.cRapidAPIKey)
+        End If
+
+        lblStatus.Text = "fetching ... "
+        lblStatus.Refresh()
+        lblNumRegs.Text = ""
+        txtFixtures.Text = ""
+
+        response = GetAPIData(url, dicHeader)
+        If String.IsNullOrEmpty(response) Then
+            lblStatus.Text = "Datos no obtenidos"
+        Else
+            lblStatus.Text = "Datos obtenidos de API..."
+
+            Dim oTeams As New TeamApi
+            oTeams = JsonConvert.DeserializeObject(Of TeamApi)(response)
+
+            lblNumRegs.Text = oTeams.api.results
+
+            For Each t As Teams In oTeams.api.teams.OrderBy(Function(f) f.name)
+                txtFixtures.Text &= t.name & vbCrLf
+            Next
+
+        End If
+
+        lblStatus.Text = IIf(String.IsNullOrEmpty(txtFixtures.Text), "Datos NO obtenidos", "Datos obtenidos con exito")
 
     End Sub
 #End Region
