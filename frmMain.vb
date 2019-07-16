@@ -133,22 +133,22 @@ Public Class frmMain
                             ganadorSoccer = -1
                             hayDifWin = False
 
-                            '-- DIFERENCIA CON MAS DE +2 votos
+                            '-- DIFERENCIA CON MAS DE +2 votos vs el resto
                             'Gana Visitante 
-                            If oGame.CountAway - oGame.CountHome > 2 AndAlso oGame.CountAway - oGame.CountDraw > 2 Then
+                            If oGame.CountAway - (oGame.CountHome + oGame.CountDraw) > 2 Then
                                 ganadorSoccer = 2
                                 hayDifWin = True
                             End If
                             'Gana Local
                             If Not hayDifWin Then
-                                If oGame.CountHome - oGame.CountAway > 2 AndAlso oGame.CountHome - oGame.CountDraw > 2 Then
+                                If oGame.CountHome - (oGame.CountAway + oGame.CountDraw) > 2 Then
                                     ganadorSoccer = 1
                                     hayDifWin = True
                                 End If
                             End If
                             'Empate
                             If Not hayDifWin Then
-                                If oGame.CountDraw - oGame.CountAway > 2 AndAlso oGame.CountDraw - oGame.CountHome > 2 Then
+                                If oGame.CountDraw - (oGame.CountHome + oGame.CountAway) > 2 Then
                                     ganadorSoccer = 0
                                     hayDifWin = True
                                 End If
