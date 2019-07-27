@@ -79,6 +79,40 @@ Public Class FixtureTeam
             Case "Monarcas" : tAbbr = "MOR"
             Case "Monterrey" : tAbbr = "MTY"
             Case "U.N.A.M. - Pumas" : tAbbr = "PUM"
+
+                'ESPAÑA
+            Case "Atletico Madrid" : tAbbr = "ATM"
+            Case "Real Betis" : tAbbr = "BET"
+            Case "Real Madrid" : tAbbr = "RMA"
+            Case "Real Sociedad" : tAbbr = "SOC"
+            Case "Valladolid" : tAbbr = "VAD"
+
+
+                'Germany
+            Case "1899 Hoffenheim" : tAbbr = "HOF"
+            Case "Bayer Leverkusen" : tAbbr = "BLE"
+            Case "Bayern Munich" : tAbbr = "BMU"
+            Case "Borussia Dortmund" : tAbbr = "DOR"
+            Case "Borussia Monchengladbach" : tAbbr = "MON"
+            Case "Eintracht Frankfurt" : tAbbr = "FRA"
+            Case "FC Augsburg" : tAbbr = "AUG"
+            Case "FC Koln" : tAbbr = "KOL"
+            Case "FC Schalke 04" : tAbbr = "SCH"
+            Case "FSV Mainz 05" : tAbbr = "MAI"
+            Case "Hertha Berlin" : tAbbr = "HBE"
+            Case "RB Leipzig" : tAbbr = "LEI"
+            Case "SC Freiburg" : tAbbr = "FRE"
+            Case "SC Paderborn 07" : tAbbr = "PAD"
+            Case "Union Berlin" : tAbbr = "BER"
+            Case "VfL Wolfsburg" : tAbbr = "WOL"
+
+
+                'Portugal
+            Case "FC Porto" : tAbbr = "POR"
+            Case "Santa Clara" : tAbbr = "SCL"
+            Case "SC Braga" : tAbbr = "BRA"
+
+
         End Select
 
         Return tAbbr

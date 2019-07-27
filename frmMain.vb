@@ -23,6 +23,9 @@ Public Class frmMain
         'Fixtures
         txtLeagueID.Text = ""
         txtFixtures.Text = ""
+
+        'Api
+        cboApi.SelectedIndex = 0
     End Sub
 #End Region
 
@@ -244,7 +247,14 @@ Public Class frmMain
     End Sub
 
     Private Sub btnSaveFixtures_Click(sender As Object, e As EventArgs) Handles btnSaveFixtures.Click
-        If cboLeagues.SelectedIndex > -1 Then GetFixtures()
+        If cboLeagues.SelectedIndex > -1 Then
+            Select Case cboApi.SelectedIndex
+                Case 0 : GetFixtures()
+                Case 1 : GetTeams()
+            End Select
+        End If
+
+
     End Sub
 
     Private Sub GetFixtures()
@@ -282,7 +292,50 @@ Public Class frmMain
             End If
         End If
 
-            lblStatus.Text = IIf(String.IsNullOrEmpty(txtFixtures.Text), "Datos NO obtenidos", "Datos obtenidos con exito")
+        lblStatus.Text = IIf(String.IsNullOrEmpty(txtFixtures.Text), "Datos NO obtenidos", "Datos obtenidos con exito")
+
+    End Sub
+
+    Private Sub GetTeams()
+        Dim url As String = ""
+        Dim response As String
+        Dim dicHeader As New Dictionary(Of String, String)
+
+        url = Secrets.cRapidAPIUrlTeams & txtLeagueID.Text
+        dicHeader.Add("X-RapidAPI-Host", Secrets.cRapidAPIHost)
+        dicHeader.Add("X-RapidAPI-Key", Secrets.cRapidAPIKey)
+
+        lblStatus.Text = "fetching ... "
+        lblStatus.Refresh()
+        lblNumRegs.Text = ""
+        txtFixtures.Text = ""
+
+        response = GetAPIData(url, dicHeader)
+        If String.IsNullOrEmpty(response) Then
+            lblStatus.Text = "Datos no obtenidos"
+        Else
+            lblStatus.Text = "Datos obtenidos de API..."
+
+
+            Dim oApi As New FixtureApi
+            oApi = JsonConvert.DeserializeObject(Of FixtureApi)(response)
+
+            Dim lista As New List(Of Teams)
+            lista = oApi.api.teams
+
+            For Each t As Teams In lista.OrderBy(Function(f) f.name).ToList
+                txtFixtures.Text &= "Case """ & t.name & """ : tAbbr = "" """ & vbCrLf
+            Next
+
+
+
+
+
+            lblNumRegs.Text = lista.Count
+
+        End If
+
+        lblStatus.Text = IIf(String.IsNullOrEmpty(txtFixtures.Text), "Datos NO obtenidos", "Datos obtenidos con exito")
 
     End Sub
 #End Region
